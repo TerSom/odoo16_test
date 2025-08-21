@@ -114,3 +114,8 @@ class EstateProperty(models.Model):
                 record.best_price = max(record.offer_ids.mapped('price'))
             else:
                 record.best_price = 0
+                
+class inheritResUsers(models.Model):
+    _inherit = 'res.users'
+        
+    property_ids = fields.One2many('estate.property', 'salesperson_id')
