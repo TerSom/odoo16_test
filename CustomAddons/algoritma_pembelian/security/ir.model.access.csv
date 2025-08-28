@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_algoritma_pembelian,algoritma_pembelian.algoritma_pembelian,model_algoritma_pembelian,base.group_user,1,1,1,1
+access_algoritma_pembelian_line,algoritma_pembelian_line.algoritma_pembelian_line,model_algoritma_pembelian_line,base.group_user,1,1,1,1
+access_algoritma_brand,access_algoritma_brand.access_algoritma_brand,model_algoritma_brand,base.group_user,1,1,1,1

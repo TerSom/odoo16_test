@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="algoritma_brand_action" model="ir.actions.act_window">
+        <field name="name">algoritma.brand.action</field>
+        <field name="res_model">algoritma.brand</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="algoritma_brand_view_tree" model="ir.ui.view">
+        <field name="name">algoritma.brand.view.tree</field>
+        <field name="model">algoritma.brand</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"></field>
+            </tree>
+        </field>
+    </record>
+</odoo>

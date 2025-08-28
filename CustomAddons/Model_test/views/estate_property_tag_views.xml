@@ -2,14 +2,14 @@
 <odoo>
     <!-- record view -->
     <record id="estate_property_tag_action" model="ir.actions.act_window">
-        <field name="name">Property Tags</field>
+        <field name="name">property.tags.action</field>
         <field name="res_model">estate.property.tag</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <!-- Tree -->
-    <record id="estate_property_tag_list" model="ir.ui.view">
-        <field name="name">Property Tags</field>
+    <record id="estate_property_tag_view_list" model="ir.ui.view">
+        <field name="name">property.tags.view.list</field>
         <field name="model">estate.property.tag</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
@@ -20,7 +20,7 @@
 
     <!-- search view -->
     <record id="estate_property_tag_search" model="ir.ui.view">
-        <field name="name">estate propery tag search</field>
+        <field name="name">estate.propery.tag.search</field>
         <field name="model">estate.property.tag</field>
         <field name="arch" type="xml">
             <search>

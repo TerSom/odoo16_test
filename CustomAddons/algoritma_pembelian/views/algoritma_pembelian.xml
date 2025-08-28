@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="algoritma_pembelian_action" model="ir.actions.act_window">
+        <field name="name">algoritma.pembelian.action</field>
+        <field name="res_model">algoritma.pembelian</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_group_status' : 1}</field>
+        <field name="search_view_id" ref="algoritma_pembelian.algoritma_pembelian_view_search"></field>
+    </record>
+
+    <!-- tree -->
+    <record id="algoritma_pembelian_view_tree" model="ir.ui.view">
+        <field name="name">algoritma.pembelian.view.tree</field>
+        <field name="model">algoritma.pembelian</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"></field>
+                <field name="nama"></field>
+                <field name="tanggal"></field>
+                <field name="status"></field>
+            </tree>
+        </field>
+    </record>
+
+    <!-- form -->
+    <record id="algoritma_pembelian_view_form" model="ir.ui.view">
+        <field name="name">algoritma.pembelian.view.form</field>
+        <field name="model">algoritma.pembelian</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="to_approve" type="object" class="oe_highlight" string="To Approve" attrs="{'invisible': [('status', 'in' , ['to_approve','approved','done','canceled'] )]}"></button>
+                    <button name="canceled" type="object" class="oe_highlight" string="Canceled" attrs="{'invisible': [('status','in',['canceled','to_approve','done','approved'])]}"></button>
+                    <button name="approved" type="object" class="oe_highlight" string="Approved" attrs="{'invisible': [('status', 'in',['draft','approved','done','canceled'])]}"></button>
+                    <button name="done" type="object" class="oe_highlight" string="Done" attrs="{'invisible':[('status' ,'in',['draft','to_approve','done','canceled'])]}"></button>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,to_approve,approved,done"></field>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="title"></field>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="nama" attrs="{'readonly' : [('status','!=','draft')]}" ></field>
+                            <field name="algoritma_brand_ids" widget="many2many_tags" options="{'color_field': 'color'} and {'no_create': True}" attrs="{'required' : [('status' ,'=','draft')]}" ></field>
+                        </group>
+                        <group>
+                            <field name="tanggal"></field>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="product">
+                            <field name="algoritma_pembelian_line_ids" options="{'reload_on_button': True}" attrs="{'readonly': [('status','in',['approved','done'])]}">
+                                <tree edit="true" editable="bottom" create="true" delete="true">
+                                    <field name="product_id" domain="[('detailed_type','=','product')]" options="{'no_create': True}" ></field>
+                                    <field name="name"></field>
+                                    <field name="sales_price"></field>
+                                    <field name="standar_price"></field>
+                                    <field name="quantity"></field>
+                                    <field name="total_price"></field>
+                                    <field name="uom_id" domain="[('category_id','in','Weight')]" options="{'no_create': True}"></field>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- kanban -->
+    <record id="algoritma_pembelian_view_kanban" model="ir.ui.view">
+        <field name="name">algoritma.pembelian.view.kanban</field>
+        <field name="model">algoritma.pembelian</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="nama" />
+                <field name="tanggal" />
+                <field name="status" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb16">
+                                <strong>
+                                    <span>
+                                        <t t-esc="record.nama.value" />
+                                    </span>
+                                </strong>
+                            </div>  
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <span class="text-muted">
+                                        <t t-esc="record.tanggal.value" />
+                                    </span>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <span class="badge badge-pill">
+                                        <t t-esc="record.status.value" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="algoritma_pembelian_view_search" model="ir.ui.view">
+        <field name="name">algoritma.pembelian.view.search</field>
+        <field name="model">algoritma.pembelian</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="algoritma_pembelian_line_ids" string="Product id" filter_domain="[('algoritma_pembelian_line_ids','ilike',self)]"></field>
+                <field name="nama" string="Nama" filter_domain="[('nama','ilike',self)]"></field>
+
+                <filter string="Draft" name="status" domain="[('status','=','draft')]"></filter>
+                <filter string="To Aprrove" name="staus" domain="[('status','=','to_approve')]"></filter>
+                <filter string="Aprroved" name="staus" domain="[('status','=','approved')]"></filter>
+                <filter string="Done" name="staus" domain="[('status','=','done')]"></filter>
+                <filter string="Canceled" name="staus" domain="[('status','=','canceled')]"></filter>
+
+                <group string="Group By">
+                    <filter name="status" string="Status" domain="[]" context="{'group_by': 'status'}"></filter>
+                    <filter name="algoritma_brand_ids" string="Brand" domain="[]" context="{'group_by': 'algoritma_brand_ids'}"></filter>
+                    <filter name="product_name" string="Product ids" domain="[]" context="{'group_by': 'product_name'}"></filter>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

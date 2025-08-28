@@ -3,15 +3,15 @@
 
      <!-- record view -->
     <record id="estate_property_offer_action" model="ir.actions.act_window">
-        <field name="name">estate property offer action</field>
+        <field name="name">estate.property.offer.action</field>
         <field name="res_model">estate.property.offer</field>
         <field name="domain">[('property_type_id', '=', active_id)]</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <!-- tree view -->
-    <record id="estate_property_offer_list" model="ir.ui.view">
-        <field name="name">Estate Property Offer tree</field>
+    <record id="estate_property_offer_view_list" model="ir.ui.view">
+        <field name="name">estate.property.offer.view.list</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <tree editable="bottom" decoration-danger="status == 'refused'"
@@ -37,8 +37,8 @@
     </record>
 
     <!-- form views -->
-    <record id="estate_property_offer_form" model="ir.ui.view">
-        <field name="name">Estate Property Offer form</field>
+    <record id="estate_property_offer_view_form" model="ir.ui.view">
+        <field name="name">estate.property.offer.view.form</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <form>
