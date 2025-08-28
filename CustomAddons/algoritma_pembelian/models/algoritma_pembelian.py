@@ -1,6 +1,6 @@
 from odoo import fields,models, api
 from datetime import date
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError,UserError
 
 
 class algoritma_pembelian(models.Model):
